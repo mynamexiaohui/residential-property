@@ -1,41 +1,66 @@
 <template>
-    <div>
-        <el-container>
-            <el-header>Header</el-header>
-            <el-main>Main</el-main>
-        </el-container>
+    <div class="layout">
+        <Layout>
+            <ContentHeader></ContentHeader>
+            <Layout style="height:calc(100vh - 60px);">
+                <Sider collapsible :collapsed-width="100" v-model="isCollapsed" class="menu">
+                    <leftMenu @changeCollapsed="changeCollapsed" :isCollapsed="isCollapsed"></leftMenu>
+                </Sider>
+                <Layout :style="{padding: '0 24px 24px'}">
+                    <ContentBreadCrumb></ContentBreadCrumb>
+                    <Content
+                        :style="{padding: '24px', minHeight: '280px', background: '#fff'}"
+                    >Content</Content>
+                </Layout>
+            </Layout>
+        </Layout>
     </div>
 </template>
 
 <script>
-export default {};
+import ContentHeader from "../components/ContentHeader";
+import leftMenu from "../components/LeftMenu";
+import ContentBreadCrumb from "../components/ContentBreadCrumb";
+export default {
+    data() {
+        return {
+            openNames: ["1"],
+            isCollapsed: false
+        };
+    },
+    watch: {},
+
+    methods: {
+        changeCollapsed(val) {
+            window.console.log(val);
+            this.isCollapsed = val;
+        }
+    },
+    computed: {},
+    components: {
+        ContentHeader,
+        leftMenu,
+        ContentBreadCrumb
+    }
+};
 </script>
 
 <style>
-.el-header,
-.el-footer {
-    background-color: #b3c0d1;
-    color: #333;
-    text-align: center;
-    line-height: 60px;
+.layout {
+    background: #f5f7f9;
+    position: relative;
+    overflow-x: hidden;
+    overflow-y: scroll;
 }
-
-.el-aside {
-    background-color: #d3dce6;
-    color: #333;
-    text-align: center;
-    line-height: 200px;
+.layout-logo {
+    height: 30px;
+    color: #fff;
+    border-radius: 3px;
+    float: left;
+    position: relative;
+    top: 15px;
+    left: 20px;
+    line-height: 30px;
+    font-size: 20px;
 }
-
-.el-main {
-    background-color: #e9eef3;
-    color: #333;
-    text-align: center;
-    line-height: 160px;
-}
-
-body > .el-container {
-    margin-bottom: 40px;
-}
-
 </style>
